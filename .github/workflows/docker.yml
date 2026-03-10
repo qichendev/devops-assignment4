@@ -16,8 +16,16 @@ jobs:
 
       - name: Debug secrets
         run: |
-          echo "APP_MESSAGE: ${{ secrets.APP_MESSAGE }}"
-          echo "APP_HEALTH: ${{ secrets.APP_HEALTH }}"
+          if [ -z "${{ secrets.APP_MESSAGE }}" ]; then
+            echo "ERROR: APP_MESSAGE secret is empty or not set"
+          else
+            echo "APP_MESSAGE secret is set"
+          fi
+          if [ -z "${{ secrets.APP_HEALTH }}" ]; then
+            echo "ERROR: APP_HEALTH secret is empty or not set"
+          else
+            echo "APP_HEALTH secret is set"
+          fi
 
       - name: Create .env file
         run: |
