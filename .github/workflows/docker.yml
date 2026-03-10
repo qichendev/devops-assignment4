@@ -14,6 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug secrets
+        run: |
+          echo "APP_MESSAGE: ${{ secrets.APP_MESSAGE }}"
+          echo "APP_HEALTH: ${{ secrets.APP_HEALTH }}"
+
       - name: Create .env file
         run: |
           echo "APP_MESSAGE=${{ secrets.APP_MESSAGE }}" > .env
