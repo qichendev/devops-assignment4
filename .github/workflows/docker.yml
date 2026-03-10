@@ -42,13 +42,17 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -d --name test-app -p 5000:5000 --env-file .env flask-app:test
+          docker run -d --name test-app -p 5000:5000 \
+            -e APP_MESSAGE="${{ secrets.APP_MESSAGE }}" \
+            -e APP_HEALTH="${{ secrets.APP_HEALTH }}" \
+            flask-app:test
           sleep 10
 
       - name: Check container status
         run: |
           docker ps -a
           docker logs test-app
+          docker exec test-app env
 
       - name: Test home route
         run: |
